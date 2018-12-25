@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, AsyncStorage } from 'react-native';
 import { Calendar, CalendarList } from 'react-native-calendars';
 
-
+import CycleSet from './CycleSet'
 
 export default class CalendarHorizont extends React.Component {
   constructor(props) {
@@ -16,7 +16,9 @@ export default class CalendarHorizont extends React.Component {
       // кнопка календарь
       <View>
         <CalendarList
-
+        markedDates={{
+                '{climaxDay}': {selected: true, selectedColor: 'red'},
+              }}
         style={{
             height:100
           }}

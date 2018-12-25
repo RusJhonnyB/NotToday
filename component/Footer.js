@@ -19,7 +19,7 @@ export default class Footer extends React.Component {
               <Image source={require('./img/bicon.png')}  style={styles.img}/>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('test')}>
               <Image source={require('./img/bicon.png')}  style={styles.img}/>
           </TouchableOpacity>
 
