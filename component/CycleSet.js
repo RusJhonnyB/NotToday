@@ -10,9 +10,10 @@ export default class CycleSet extends React.Component {
       super(props)
       this.state = {
 
-        climaxDay:'', cycleDay:'',  cycleInt:'', mydate:"22.12.2018"
+        climaxDay:'', cycleDay:'',  cycleInt:'', mydate:"2018.12.27"
 
       }
+      // AsyncStorage.getItem('climaxDay').then(value => this.setState({ CD: value }));
     }
 
     render() {
@@ -35,7 +36,7 @@ export default class CycleSet extends React.Component {
           date={this.state.data}
           mode="date"
           placeholder="select date"
-          format="DD-MM-YYYY"
+          format="YYYY-MM-DD"
           confirmBtnText="Принять"
           cancelBtnText="Отмена"
           customStyles={{
@@ -49,8 +50,8 @@ export default class CycleSet extends React.Component {
               marginLeft: 36
             }
           }}
-          minDate="01-01-2018"
-          maxDate="01-01-2020"
+          minDate="2018-01-01"
+          maxDate="2020-01-01"
           onDateChange={climaxDay => this.setState({climaxDay})}
           />
           <TouchableOpacity
@@ -59,20 +60,37 @@ export default class CycleSet extends React.Component {
           >
               <Text>Save</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+          style={styles.btn}
+          onPress={this.showData}
+          >
+              <Text>Show</Text>
+          </TouchableOpacity>
+          <Text> {this.state.CD} </Text>
         </View>
       );
     }
     saveData =()=> {
       const {climaxDay, cycleDay, cycleInt} = this.state;
-      // let MyArray = {climaxDay:climaxDay, cycleDay:cycleDay, cycleInt:cycleInt}
-      // AsyncStorage.setItem('MyArray',JSON.stringify(MyArray));
-      // let MArray = AsyncStorage.getItem('MyArray');
-      // let i = JSON.parse(MArray);
+      AsyncStorage.setItem('climaxDay', climaxDay);
 
-      AsyncStorage.setItem('climaxDay', JSON.stringify(climaxDay));
-      let CD = AsyncStorage.getItem('climaxDay');
+      // AsyncStorage.getItem('climaxDayS').then(value => this.setState({ CDD: value }));
+      // AsyncStorage.getItem('climaxDay').then(value => this.setState({ CD: value }));
 
-      alert(CD.result + '' + cycleDay + '' + cycleInt)
+      let cdd = new Date(climaxDay.replace(/(.d+)-(.d+)-(.d+)/, '$2.$3.$1'));
+      let d = new Date(cdd);
+      for ( let i=1; i<5; i++){
+        d.setDate(cdd.getDate()+i);
+        let dataString  = d.getFullYear() + "-" +  (d.getMonth()+1) + "-" + d.getDate();
+        console.log(dataString);
+        AsyncStorage.setItem('climaxDayS', dataString);
+      };
+
+    }
+    showData = () => {
+      if (this.state.CD){
+          alert(this.state.CD);
+        }
     }
 
     addDays (date, days, cycle) {
@@ -102,5 +120,8 @@ const styles = StyleSheet.create({
     width: '80%',
     color: '#607e85',
   },
+  btn: {
+    margin:20
+  }
 
 });

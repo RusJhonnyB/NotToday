@@ -10,6 +10,8 @@ export default class CalendarHorizont extends React.Component {
     this.state = {
      days : ''
    }
+  AsyncStorage.getItem('climaxDay').then(value => this.setState({ CD: value }));
+  AsyncStorage.getItem('climaxDayS').then(value => this.setState({ CDD: value }));
  }
   render() {
     return (
@@ -17,7 +19,8 @@ export default class CalendarHorizont extends React.Component {
       <View>
         <CalendarList
         markedDates={{
-                '{climaxDay}': {selected: true, selectedColor: 'red'},
+                [this.state.CD]:{selected: true, selectedColor: 'red'},
+                [this.state.CDD]:{selected: true, selectedColor: 'red'},                
               }}
         style={{
             height:100
@@ -36,7 +39,11 @@ export default class CalendarHorizont extends React.Component {
              })
         }}
         />
-        <Text style={styles.textd}>Сегодня {this.state.days}</Text>
+        <Text style={styles.textd}>Сегодня {this.state.days}
+        <Text> {this.state.CD} </Text>
+        <Text> {this.state.CDD} </Text>
+        </Text>
+
       </View>
     );
   }
